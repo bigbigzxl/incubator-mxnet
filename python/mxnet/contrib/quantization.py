@@ -244,6 +244,11 @@ def _smooth_distribution(p, eps=0.0001):
     corresponding amount off the non-zero values.
     Ref: http://web.engr.illinois.edu/~hanj/cs412/bk3/KL-divergence.pdf
     """
+    assert min(p) >= 0.0
+    sort_p = sorted(list(set(p)))
+    if eps >= sort_p[1]:
+        eps = first_nonZero_minValue/2
+        
     is_zeros = (p == 0).astype(np.float32)
     is_nonzeros = (p != 0).astype(np.float32)
     n_zeros = is_zeros.sum()
